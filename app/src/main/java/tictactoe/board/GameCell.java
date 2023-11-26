@@ -8,7 +8,7 @@ import tictactoe.Utils;
  * @author atesahmet0
  * Represents a single piece of cell in the board.
  */
-class GameCell{
+public class GameCell{
   //Default state is empty 
   CellState cellState = CellState.EMPTY;
   //Coordinates as x, y and refer to top left pane
@@ -120,10 +120,12 @@ class GameCell{
       this.cellState
     );
   }
+ 
+  public enum CellState{
+    CROSS,
+    CIRCLE,
+    EMPTY
+  }
 }
 
-enum CellState{
-  CROSS,
-  CIRCLE,
-  EMPTY
-}
+
