@@ -1,9 +1,9 @@
-package tictactoe;
+package tictactoe.board;
 
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.canvas.GraphicsContext;
-
+import tictactoe.Utils;
 /**
  * @author atesahmet0
  * Represents a single piece of cell in the board.

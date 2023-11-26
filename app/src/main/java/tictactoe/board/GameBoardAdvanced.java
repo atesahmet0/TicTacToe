@@ -1,8 +1,11 @@
-package tictactoe;
+package tictactoe.board;
 
 import javafx.scene.canvas.GraphicsContext;
 import java.util.function.Consumer;
 
+/**
+ * @author atesahmet0
+ */
 class GameBoardAdvanced{
   public static final int COLUMNS = 9;
   public static final int ROWS = 9;
@@ -23,17 +26,17 @@ class GameBoardAdvanced{
     //Drawing horizontal lines
     for(int row = 0; row < ROWS + 1; row ++){
       gc.fillRect(x, row * gapVertical + y, width, thicknessOfInsideBorders);
-    } 
+    }
+
+    //Drawing vertical lines
     for(int column = 0; column < COLUMNS + 1; column++){
       gc.fillRect(column * gapHorizontal + x, y, thicknessOfInsideBorders, height);
     }
 
-    //Drawing cells
-    for(int column = 0; column < COLUMNS; column++){
-      for(int row = 0; row < ROWS; row++){
-        GameCell.paint(gc, gameBoard.cellList[column][row], 14);
-      }
-    }
+    //Drawing all cells
+    gameBoard.applyToAllCells( cell -> {
+      GameCell.paint(gc, cell);
+    });
   }
 
   public GameBoardAdvanced(int x, int y, int width, int height){
@@ -54,6 +57,7 @@ class GameBoardAdvanced{
   }
 
   /**
+   * This method handles mouse click
    * @param x is the X coordinate of the mouse
    * @param y is the Y coordinate of the mouse
    */

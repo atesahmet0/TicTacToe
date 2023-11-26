@@ -20,7 +20,7 @@ public class App extends Application{
   public static final String APP_NAME = "TicTacToe";
   public static final int WIDTH = 512;
   public static final int HEIGHT = 512;
-  public static final Color BACKGROUND_COLOR = Color.WHITESMOKE; 
+  public static final Color BACKGROUND_COLOR = Color.WHITE; 
   public static final int THICKNESS_OF_INSIDE_BORDERS = 2;
   public static final int CANVAS_MARGIN = 10;
 
@@ -47,7 +47,6 @@ public class App extends Application{
     GameBoardAdvanced.paint(gc, gba);
     
     canvas.setOnMouseReleased(event -> {
-      text.setText("x is: " + event.getX() + " y is: " + event.getY());
       gba.pointClicked((int) event.getX(),(int) event.getY());
       clearCanvas();
       GameBoardAdvanced.paint(gc, gba);
