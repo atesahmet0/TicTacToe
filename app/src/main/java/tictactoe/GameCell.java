@@ -1,10 +1,16 @@
 package tictactoe;
 
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.canvas.GraphicsContext;
 
+/**
+ * @author atesahmet0
+ * Represents a single piece of cell in the board.
+ */
 class GameCell{
-  //Default stat is CROSS
-  private CellState cellState = CellState.EMPTY;
+  //Default state is empty 
+  CellState cellState = CellState.EMPTY;
   //Coordinates as x, y and refer to top left pane
   int x = 0, y = 0;
   int height = 0, width = 0;
@@ -30,6 +36,31 @@ class GameCell{
     }
   }
 
+  /**
+   * Paints object on the GraphicsContext.
+   * @param gc GraphicsContext to be painted on
+   * @param gameCell GameCell to be painted
+   * @param margin margin from left and right make sure this is an even value or else results may be unpredictable!
+   */
+  public static void paint(GraphicsContext gc, GameCell gameCell, int margin){
+    GameCell mock = gameCell.clone();
+    mock.width -= margin;
+    mock.x += margin / 2;
+    mock.height -= margin;
+    mock.y += margin / 2;
+    switch(mock.cellState){
+      case EMPTY:
+      break;
+      case CROSS:
+      paintCross(gc, mock);
+      break;
+      case CIRCLE:
+      paintCircle(gc, mock);
+      break;
+    }
+ 
+  }
+
   private static void paintCircle(GraphicsContext gc, GameCell gameCell){
     double x = gameCell.x;
     double y = gameCell.y;
@@ -37,7 +68,11 @@ class GameCell{
     double height = gameCell.height;
     double inline = gameCell.inline;
 
-    gc.strokeOval(x, y, width - inline, height - inline);
+    gc.fillOval(x, y, width - inline, height - inline);
+    Paint initial = gc.getFill();
+    gc.setFill(Color.WHITE);
+    gc.fillOval(x + inline, y + inline, width -(3 * inline), height - (3 * inline));
+    gc.setFill(initial);
   }
 
   private static void paintCross(GraphicsContext gc, GameCell gameCell){
@@ -56,6 +91,10 @@ class GameCell{
     gc.fillPolygon(xPoints, yPoints, 4);
   }
 
+  public boolean isPointInBoundaries(int x, int y){
+    return Utils.isPointInBoundaries(x, y, this.x, this.x + width, this.y, this.y + height);
+  }
+
   public GameCell(){
     x = 0;
     y = 0;
@@ -70,6 +109,16 @@ class GameCell{
     this.width = width;
     this.height = height;
     this.cellState = cellState;
+  }
+
+  public GameCell clone(){
+    return new GameCell(
+      this.x,
+      this.y,
+      this.width,
+      this.height,
+      this.cellState
+    );
   }
 }
 

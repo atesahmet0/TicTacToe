@@ -39,15 +39,21 @@ public class App extends Application{
     vBox.getChildren().add(text);
 
     GraphicsContext gc = canvas.getGraphicsContext2D();
+    gc.setFill(Color.DARKMAGENTA);
+
+    GameBoardAdvanced gba = new GameBoardAdvanced(10, 0, 500, 500);
+    gba.thicknessOfInsideBorders = 2;
+    GameBoardAdvanced.paint(gc, gba);
+    
 
     canvas.setOnMouseReleased(event -> {
       text.setText("x is: " + event.getX() + " y is: " + event.getY());
+      gba.pointClicked((int) event.getX(),(int) event.getY());
+      gc.setFill(Color.WHITE);
+      gc.fillRect(0, 0, 512, 1024);
+      gc.setFill(Color.MAGENTA);
+      GameBoardAdvanced.paint(gc, gba);
     });
-
-    gc.setFill(Color.DARKMAGENTA);
-    GameBoardAdvanced gba = new GameBoardAdvanced(10, 0, 500, 500);
-    GameBoardAdvanced.paint(gc, gba);
-    gba.thicknessOfInsideBorders = 2;
 
     stage.setScene(scene);
     stage.show();
