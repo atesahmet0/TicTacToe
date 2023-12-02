@@ -107,6 +107,18 @@ public class GameBoardAdvanced{
     return (double) width / COLUMNS; 
   }
 
+  public GameCell getCell(int x, int y){
+    return cellList[x][y];
+  }
+
+  public int getRowCount(){
+    return ROWS;
+  }
+
+  public int getColumnCount(){
+    return COLUMNS;
+  }
+
   public double getCellHeight(){
     return (double) width / ROWS;
   }

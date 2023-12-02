@@ -2,6 +2,7 @@ package tictactoe;
 
 import tictactoe.game.GameAdvanced;
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -10,14 +11,16 @@ import javafx.stage.Stage;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
+import javafx.scene.control.Button;
+
 /**
  * @author atesahmet0
  */
 public class App extends Application{
 
 
-  public static final String APP_NAME = "TicTacToe";
-  public static final int WIDTH = 512;
+  public static final String APP_NAME = "tictactoe";
+  public static final int WIDTH = 512; 
   public static final int HEIGHT = 512;
   public static final Color BACKGROUND_COLOR = Color.WHITE; 
   public static final Color BORDER_COLOR = Color.CRIMSON;
@@ -29,6 +32,9 @@ public class App extends Application{
   public static final int MARGIN_OF_CELL = 14;
 
   private Canvas canvas;
+  private GameAdvanced gameAdvanced;
+
+  private int currentGameCount = 1;
 
   @Override
   public void start(Stage stage) throws Exception{
@@ -44,9 +50,9 @@ public class App extends Application{
     gc.setFill(BORDER_COLOR);
     Text text = new Text();
     vBox.getChildren().add(text);
-
+    text.setText(String.valueOf("Game " + currentGameCount));
     clearCanvas();
-    GameAdvanced gameAdvanced = new GameAdvanced(CANVAS_MARGIN, CANVAS_MARGIN, WIDTH - (2 * CANVAS_MARGIN), HEIGHT - (2 * CANVAS_MARGIN));
+    gameAdvanced = new GameAdvanced(CANVAS_MARGIN, CANVAS_MARGIN, WIDTH - (2 * CANVAS_MARGIN), HEIGHT - (2 * CANVAS_MARGIN));
     gameAdvanced.setThicknessOfInsideBorders(THICKNESS_OF_INSIDE_BORDERS);
     gameAdvanced.setMarginOfCell(MARGIN_OF_CELL);
     gameAdvanced.setCircleColor(CIRCLE_COLOR);
@@ -55,15 +61,39 @@ public class App extends Application{
     GameAdvanced.paint(gc, gameAdvanced);
 
     canvas.setOnMouseReleased(event -> {
-      clearCanvas();
       gameAdvanced.pointClicked( (int) event.getX(), (int) event.getY());
-      GameAdvanced.paint(gc, gameAdvanced);
+      paintGame(gc);
+      if(gameAdvanced.isGameOver()) text.setText("Game is over!");
+  
     });
 
+    Button resetButton = new Button("Restart");
+    resetButton.setOnMouseReleased( event -> {
+      gameAdvanced = createGameAdvancedDefault();
+      text.setText(String.valueOf("Game " + ++currentGameCount));
+      paintGame(gc);
+    });
+
+    vBox.getChildren().add(resetButton);
+    vBox.setAlignment(Pos.CENTER);
     stage.setScene(scene);
     stage.show();
   }
 
+  private void paintGame(GraphicsContext gc){
+    clearCanvas();
+    GameAdvanced.paint(gc, gameAdvanced);
+  }
+
+  private GameAdvanced createGameAdvancedDefault(){
+    GameAdvanced gameAdvanced = new GameAdvanced(CANVAS_MARGIN, CANVAS_MARGIN, WIDTH - (2 * CANVAS_MARGIN), HEIGHT - (2 * CANVAS_MARGIN));
+    gameAdvanced.setThicknessOfInsideBorders(THICKNESS_OF_INSIDE_BORDERS);
+    gameAdvanced.setMarginOfCell(MARGIN_OF_CELL);
+    gameAdvanced.setCircleColor(CIRCLE_COLOR);
+    gameAdvanced.setBorderColor(BORDER_COLOR);
+    gameAdvanced.setCrossColor(CROSS_COLOR);
+    return gameAdvanced;
+  }
   /**
    * Clears canvas and doesnt changes initial color of it
    */

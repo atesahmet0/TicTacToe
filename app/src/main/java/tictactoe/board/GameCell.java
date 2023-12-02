@@ -120,7 +120,10 @@ public class GameCell{
       this.cellState
     );
   }
- 
+
+  public CellState getCellState(){
+    return cellState;
+  }
   public enum CellState{
     CROSS,
     CIRCLE,
