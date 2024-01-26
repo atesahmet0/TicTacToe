@@ -1,36 +1,35 @@
 package tictactoe.game;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import tictactoe.board.GameBoardAdvanced;
 import tictactoe.board.GameCell.CellState;
 import tictactoe.player.Player;
-import javafx.scene.paint.Color;
 /**
- * This is a class that holds everything about an single game.
+ * This is a class that holds everything about a single game.
  * GameAdvanced object is responsible from board, players, rules etc...
- * Also this object paints current state of the game through paint method.
+ * Also, this object paints current state of the game through paint method.
  * @author atesahmet0
  */
 public class GameAdvanced{
-  private GameBoardAdvanced gameBoardAdvanced;
-  private Player playerFirst, playerSecond;
+  private final GameBoardAdvanced gameBoardAdvanced;
+  private final Player playerFirst, playerSecond;
   private Player currentPlayer;
   private boolean isGameOver = false;
 
   /**
    * Returns true if the winningCondition satisfied
-   * winningConfition is having minimum amounts of States in a row or column
+   * winning Condition is having minimum amounts of States in a row or column
    */
   public static boolean checkWinningCondition(GameAdvanced gameAdvanced){
     final int minAmountInARow = 4;
     GameBoardAdvanced gba = gameAdvanced.gameBoardAdvanced;
-    CellState currentCell = CellState.EMPTY; 
-    for(int row = 0; row < gba.getRowCount(); row++){
-      for(int column = 0; column < gba.getColumnCount(); column++){
-        currentCell = gba.getCell(row,column).getCellState();
+    for(int row = 0; row < GameBoardAdvanced.ROWS; row++){
+      for(int column = 0; column < GameBoardAdvanced.COLUMNS; column++){
+        CellState currentCell = gba.getCell(row,column).getCellState();
         if(currentCell == CellState.EMPTY) continue; 
         //Check row match
-        if(!(row + minAmountInARow > gba.getRowCount())){
+        if(!(row + minAmountInARow > GameBoardAdvanced.ROWS)){
           boolean rowMatch = true;
           //Checks for the cells next to initial
           for(int i = 1; i < minAmountInARow; i++){
@@ -40,7 +39,7 @@ public class GameAdvanced{
         }  
 
         //Check column match
-        if(!(column + minAmountInARow > gba.getColumnCount())){
+        if(!(column + minAmountInARow > GameBoardAdvanced.COLUMNS)){
           //Checks for the cells next to initial. 
           boolean columnMatch = true;
           for(int i = 1; i < minAmountInARow; i++){
@@ -71,43 +70,27 @@ public class GameAdvanced{
     if(checkWinningCondition(this)) isGameOver = true;
   }
 
-  public void setCrossColor(Color color){
-    gameBoardAdvanced.setCrossColor(color);
-  }
-
-  public void setBorderColor(Color color){
-    gameBoardAdvanced.setBorderColor(color);
-  }
-
-  public void setCircleColor(Color color){
-    gameBoardAdvanced.setCircleColor(color);
-  }
-
-  public void setMarginOfCell(int margin){
-    gameBoardAdvanced.setMarginOfCell(margin);
-  }
-
-  public void setThicknessOfInsideBorders(int thickness){
-    gameBoardAdvanced.setThicknessOfInsideBorders(thickness);
-  }
-
-  public Player getCurrentPlayer(){
-    return currentPlayer;
-  }
-
   public boolean isGameOver(){
     return isGameOver;
   }
-  /**
-   * DONT CHANGE BOARDS WIDTH AND HEIGHT 
-   */
-  @Deprecated
-  public void setWidth(int width){
-    gameBoardAdvanced.setWidth(width);
+
+  public void setThicknessOfInsideBorders(int thicknessOfInsideBorders) {
+    gameBoardAdvanced.setThicknessOfInsideBorders(thicknessOfInsideBorders);
   }
 
-  @Deprecated
-  public void setHeight(int height){
-    gameBoardAdvanced.setHeight(height);
+  public void setMarginOfCell(int marginOfCell) {
+    gameBoardAdvanced.setMarginOfCell(marginOfCell);
+  }
+
+  public void setBorderColor(Color borderColor) {
+    gameBoardAdvanced.setBorderColor(borderColor);
+  }
+
+  public void setCrossColor(Color crossColor) {
+    gameBoardAdvanced.setCrossColor(crossColor);
+  }
+
+  public void setCircleColor(Color circleColor) {
+    gameBoardAdvanced.setCircleColor(circleColor);
   }
 }

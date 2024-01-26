@@ -40,4 +40,6 @@ public class Utils{
 
     return true; 
   }
+
+    //TODO move winningconditioncheck to here.
 }

@@ -19,7 +19,7 @@ import javafx.scene.control.Button;
 public class App extends Application{
 
 
-  public static final String APP_NAME = "tictactoe";
+  // public static final String APP_NAME = "tiktaktoe";
   public static final int WIDTH = 512; 
   public static final int HEIGHT = 512;
   public static final Color BACKGROUND_COLOR = Color.WHITE; 
@@ -37,7 +37,7 @@ public class App extends Application{
   private int currentGameCount = 1;
 
   @Override
-  public void start(Stage stage) throws Exception{
+  public void start(Stage stage){
     VBox vBox = new VBox();
     Scene scene = new Scene(vBox);
 
@@ -50,7 +50,7 @@ public class App extends Application{
     gc.setFill(BORDER_COLOR);
     Text text = new Text();
     vBox.getChildren().add(text);
-    text.setText(String.valueOf("Game " + currentGameCount));
+    text.setText("Game " + currentGameCount);
     clearCanvas();
     gameAdvanced = new GameAdvanced(CANVAS_MARGIN, CANVAS_MARGIN, WIDTH - (2 * CANVAS_MARGIN), HEIGHT - (2 * CANVAS_MARGIN));
     gameAdvanced.setThicknessOfInsideBorders(THICKNESS_OF_INSIDE_BORDERS);
@@ -70,7 +70,7 @@ public class App extends Application{
     Button resetButton = new Button("Restart");
     resetButton.setOnMouseReleased( event -> {
       gameAdvanced = createGameAdvancedDefault();
-      text.setText(String.valueOf("Game " + ++currentGameCount));
+      text.setText("Game " + ++currentGameCount);
       paintGame(gc);
     });
 
@@ -95,7 +95,7 @@ public class App extends Application{
     return gameAdvanced;
   }
   /**
-   * Clears canvas and doesnt changes initial color of it
+   * Clears canvas and doesn't change initial color of it
    */
   private void clearCanvas(){
     GraphicsContext gc = canvas.getGraphicsContext2D();

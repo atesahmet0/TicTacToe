@@ -15,9 +15,16 @@ public class GameBoardAdvanced{
   public static final int ROWS = 9;
 
   //Position off cell is as x, y 
-  private GameCell[][] cellList = new GameCell[COLUMNS][ROWS]; 
-  private int width = 0, height = 0, x = 0, y = 0, thicknessOfInsideBorders = 3, marginOfCell = 0;
-  private Color borderColor = Color.BLACK, crossColor = Color.PINK, circleColor = Color.BLUE;
+  private final GameCell[][] cellList = new GameCell[COLUMNS][ROWS];
+  private final int width;
+  private final int height;
+  private final int x;
+  private final int y;
+  private int thicknessOfInsideBorders = 3;
+  private int marginOfCell = 0;
+  private Color borderColor = Color.BLACK;
+  private Color crossColor = Color.PINK;
+  private Color circleColor = Color.BLUE;
 
   public static void paint(GraphicsContext gc, GameBoardAdvanced gameBoard){
     double x = gameBoard.x;
@@ -62,8 +69,8 @@ public class GameBoardAdvanced{
     for(int column = 0; column < COLUMNS; column++){
       for(int row = 0; row < ROWS; row++){
         GameCell temp = new GameCell();
-        temp.width = (int) getCellWidth();
-        temp.height = (int) getCellHeight();
+        temp.width =  width / ROWS;
+        temp.height = height / COLUMNS;
         temp.x = column * temp.width + x;
         temp.y = row * temp.height + y;
         cellList[column][row] = temp;
@@ -71,11 +78,12 @@ public class GameBoardAdvanced{
     }
   }
 
+  /**
   public void setCellStateByCoordinates(int x, int y, CellState state){
     applyToAllCells( cell -> {
       if(cell.isPointInBoundaries(x, y)) cell.cellState = state;
     });
-  }
+  }*/
 
   public void setCellStateByCoordinates(int x, int y, CellState state ,Predicate<CellState> predicate){
     applyToAllCells( cell -> {
@@ -83,6 +91,9 @@ public class GameBoardAdvanced{
     });
   }
 
+  public GameCell getCell(int row, int column){
+    return cellList[row][column];
+  }
   private void applyToAllCells(Consumer<GameCell> consumer){
     for(int column = 0; column < COLUMNS; column++){
       for(int row = 0; row < ROWS; row++){
@@ -91,51 +102,23 @@ public class GameBoardAdvanced{
     }
   }
 
-  public void setBorderColor(Color color){
-    this.borderColor = color;
-  }
-  
-  public void setCrossColor(Color color){
-    this.crossColor = color;
+  public void setThicknessOfInsideBorders(int thicknessOfInsideBorders) {
+    this.thicknessOfInsideBorders = thicknessOfInsideBorders;
   }
 
-  public void setCircleColor(Color color){
-    this.circleColor = color;
+  public void setMarginOfCell(int marginOfCell) {
+    this.marginOfCell = marginOfCell;
   }
 
-  public double getCellWidth(){
-    return (double) width / COLUMNS; 
+  public void setBorderColor(Color borderColor) {
+    this.borderColor = borderColor;
   }
 
-  public GameCell getCell(int x, int y){
-    return cellList[x][y];
+  public void setCrossColor(Color crossColor) {
+    this.crossColor = crossColor;
   }
 
-  public int getRowCount(){
-    return ROWS;
-  }
-
-  public int getColumnCount(){
-    return COLUMNS;
-  }
-
-  public double getCellHeight(){
-    return (double) width / ROWS;
-  }
-
-  public void setThicknessOfInsideBorders(int thickness){
-    thicknessOfInsideBorders = thickness;
-  }
-
-  public void setWidth(int width){
-    this.width = width;
-  }
-
-  public void setHeight(int height){
-    this.height = height;
-  }
-
-  public void setMarginOfCell(int margin){
-    this.marginOfCell = margin;
+  public void setCircleColor(Color circleColor) {
+    this.circleColor = circleColor;
   }
 }
